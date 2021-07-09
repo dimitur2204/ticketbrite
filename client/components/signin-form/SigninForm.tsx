@@ -8,12 +8,12 @@ import GenericForm from '../common/form/GenericForm';
 import FormTextField from '../common/form/FormTextField';
 import useRequest from '../../common/hooks/use-request';
 
-export type SignupFormData = {
+export type SigninFormData = {
 	email: string;
 	password: string;
 };
 
-const validationSchema: yup.SchemaOf<SignupFormData> = yup
+const validationSchema: yup.SchemaOf<SigninFormData> = yup
 	.object()
 	.defined()
 	.shape({
@@ -27,21 +27,21 @@ const validationSchema: yup.SchemaOf<SignupFormData> = yup
 			.required(customValidationMsg.requiredMsg('Password')),
 	});
 
-const defaults: SignupFormData = {
+const defaults: SigninFormData = {
 	email: '',
 	password: '',
 };
-export type SignupFormProps = { initialValues?: SignupFormData };
+export type SigninFormProps = { initialValues?: SigninFormData };
 
-export default function SignupForm({
+export default function SigninForm({
 	initialValues = defaults,
-}: SignupFormProps) {
+}: SigninFormProps) {
 	const { doRequest } = useRequest<{ email: string; password: string }>({
-		url: '/api/users/signup',
+		url: '/api/users/signin',
 		method: 'post',
 		onSuccess: () => Router.push('/'),
 	});
-	const onSubmit = async ({ email, password }: SignupFormData) => {
+	const onSubmit = async ({ email, password }: SigninFormData) => {
 		// todo: Move into epic with redux-observable when implemented
 		doRequest({ email, password });
 	};
@@ -60,7 +60,7 @@ export default function SignupForm({
 					<FormTextField type="password" label="Password" name="password" />
 				</Grid>
 				<Grid item xs={12}>
-					<SubmitButton fullWidth label="Sign up" />
+					<SubmitButton fullWidth label="Sign in" />
 				</Grid>
 			</Grid>
 		</GenericForm>

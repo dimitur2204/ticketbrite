@@ -1,10 +1,13 @@
-import Link from 'next/link';
 import Layout from '../layout/Layout';
+import { UserPayload } from '../signup-form/helpers';
 
-export default function IndexPage() {
+export type IndexPageProps = {
+	currentUser: UserPayload;
+};
+export default function IndexPage({ currentUser }: IndexPageProps) {
 	return (
 		<Layout maxWidth={false} disableOffset disableGutters>
-			<Link href="/signup">Link</Link>
+			{currentUser ? 'You are signed in' : 'You are NOT signed in'}
 		</Layout>
 	);
 }

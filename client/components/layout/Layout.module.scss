@@ -1,0 +1,14 @@
+@import 'styles/functions';
+
+.layout {
+    position: relative;
+    min-height: 100vh;
+}
+
+.pageTitle {
+    padding: theme-spacing(4);
+} 
+
+.offset {
+    margin-bottom: theme-spacing(6);
+}

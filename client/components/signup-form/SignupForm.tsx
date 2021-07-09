@@ -6,6 +6,7 @@ import { customValidationMsg } from '../../common/form/validators';
 import SubmitButton from '../common/form/SubmitButton';
 import GenericForm from '../common/form/GenericForm';
 import FormTextField from '../common/form/FormTextField';
+import useRequest from '../../common/hooks/use-request';
 
 export type SignupFormData = {
 	email: string;
@@ -35,8 +36,13 @@ export type SignupFormProps = { initialValues?: SignupFormData };
 export default function SignupForm({
 	initialValues = defaults,
 }: SignupFormProps) {
-	const onSubmit = (values: SignupFormData) => {
-		console.log(values);
+	const { doRequest } = useRequest<{ email: string; password: string }>({
+		url: '/api/users/signup',
+		method: 'post',
+	});
+	const onSubmit = async ({ email, password }: SignupFormData) => {
+		// todo: Move into epic with redux-observable when implemented
+		doRequest({ email, password });
 	};
 
 	return (

@@ -1,6 +1,6 @@
 import { ThemeOptions } from '@material-ui/core/styles';
 import {
-	createMuiTheme,
+	createTheme,
 	darken,
 	responsiveFontSizes,
 } from '@material-ui/core/styles';
@@ -94,5 +94,5 @@ export const themeOptions: ThemeOptions = {
 };
 
 // https://material-ui.com/customization/default-theme/#default-theme
-const theme = createMuiTheme(themeOptions);
+const theme = createTheme(themeOptions);
 export default responsiveFontSizes(theme);

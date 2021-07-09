@@ -1,15 +1,9 @@
 import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { ButtonProps, CircularProgressProps } from '@material-ui/core';
 
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		root: { minWidth: theme.spacing(12) },
-	})
-);
+import theme from '../../../common/theme';
 
 export type SubmitButtonProps = {
 	loading?: boolean;
@@ -23,7 +17,6 @@ export default function SubmitButton({
 	loadingColor,
 	...props
 }: SubmitButtonProps) {
-	const classes = useStyles();
 	const guessColor = props.color === 'primary' ? 'secondary' : 'primary';
 	const progressColor = loadingColor ? loadingColor : guessColor;
 	return (
@@ -32,7 +25,7 @@ export default function SubmitButton({
 			color="primary"
 			variant="contained"
 			disabled={loading}
-			className={classes.root}
+			style={{ minWidth: theme.spacing(12) }}
 			{...props}
 		>
 			{loading ? (

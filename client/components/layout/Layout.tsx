@@ -1,11 +1,5 @@
-import {
-	Box,
-	Container,
-	ContainerProps,
-	createStyles,
-	makeStyles,
-	Typography,
-} from '@material-ui/core';
+import { Box, Container, ContainerProps, Typography } from '@material-ui/core';
+import classes from './Layout.module.scss';
 
 type LayoutProps = React.PropsWithChildren<
 	ContainerProps & {
@@ -15,25 +9,6 @@ type LayoutProps = React.PropsWithChildren<
 	}
 >;
 
-const useStyles = makeStyles((theme) =>
-	createStyles({
-		layout: {
-			position: 'relative',
-			minHeight: '100vh',
-		},
-		pageTitle: {
-			padding: theme.spacing(4),
-		},
-		offset: {
-			...theme.mixins.toolbar,
-			marginBottom: theme.spacing(6),
-			[theme.breakpoints.down('md')]: {
-				marginBottom: theme.spacing(0),
-			},
-		},
-	})
-);
-
 export default function Layout({
 	title,
 	ogImage,
@@ -42,7 +17,6 @@ export default function Layout({
 	disableOffset = false,
 	...containerProps
 }: LayoutProps) {
-	const classes = useStyles();
 	return (
 		<Container maxWidth="xl" disableGutters>
 			<Container

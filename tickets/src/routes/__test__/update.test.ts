@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../app';
-
+import { natsWrapper } from '../../nats-wrapper';
 describe('update tickets router', () => {
 	it('returns 404 if ticket is not found', async () => {
 		const response = await request(app)
@@ -81,5 +81,26 @@ describe('update tickets router', () => {
 			.send();
 		expect(getNewTicketResponse.body.title).toEqual('New title');
 		expect(getNewTicketResponse.body.price).toEqual(100);
+	});
+	it('publishes an event', async () => {
+		const cookie = global.signin();
+
+		const ticketResponse = await request(app)
+			.post('/api/tickets')
+			.set('Cookie', cookie)
+			.send({
+				title: 'Test title',
+				price: 10,
+			});
+
+		await request(app)
+			.put(`/api/tickets/${ticketResponse.body.id}`)
+			.set('Cookie', cookie)
+			.send({
+				title: 'New title',
+				price: 100,
+			})
+			.expect(200);
+		expect(natsWrapper.client.publish).toHaveBeenCalled();
 	});
 });

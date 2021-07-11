@@ -1,7 +1,5 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { Ticket } from '../../models/ticket';
-
 describe('get tickets router', () => {
 	it('returns a 404 if the ticket is not found', async () => {
 		await request(app).get('/api/tickets/reallyFakeId').send().expect(404);

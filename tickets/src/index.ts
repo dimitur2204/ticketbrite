@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
+import { v4 as uuidv4 } from 'uuid';
 import { app } from './app';
+import { natsWrapper } from './nats-wrapper';
 
 const init = async () => {
 	if (!process.env.JWT_KEY) {
@@ -11,6 +13,13 @@ const init = async () => {
 	}
 
 	try {
+		await natsWrapper.connect('ticketbrite', uuidv4(), 'http://nats-srv:4222');
+		natsWrapper.client.on('close', () => {
+			console.log('NATS connection closed!');
+			process.exit();
+		});
+		process.on('SIGINT', () => natsWrapper.client.close());
+		process.on('SIGTERM', () => natsWrapper.client.close());
 		await mongoose.connect(process.env.MONGO_URI, {
 			useNewUrlParser: true,
 			useUnifiedTopology: true,
